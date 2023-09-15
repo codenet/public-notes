@@ -42,11 +42,11 @@ clocks.
 
 The paper proposes vector clocks that ensure the clock condition in both
 directions, i.e, $C(e_1) < C(e_2)$ iff $e_1 \rightarrow e_2$. A vector clocks
-has a counter, one for each process: $<c_0, c_1, ..., c_p>$. When a process
+has a counter, one for each process: $(c_0, c_1, ..., c_p)$. When a process
 clock ticks, i.e, it executes the next instruction, it increments its own clock 
 component. While sending a message, processes send their current vector
 timestamp. Let us say that a process receives a message with
-timestamp $<c_0', c_1', ..., c_p'>$. Then, the receiving process updates its
+timestamp $(c_0', c_1', ..., c_p')$. Then, the receiving process updates its
 clock as $max(c_i, c_i') \forall i$. Since, the process is the only one that is
 incrementing its own clock, it is guaranteed to have the $max$ value of its
 clock component at any moment. Time propagation is illustrated in Figure 11.
