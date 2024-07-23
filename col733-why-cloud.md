@@ -144,7 +144,7 @@ has to deal with a number of difficult issues:
 	 continue running the program keeping the programmer oblivious to these
 	 crashes. 
 
-	 There are two primary approaches for fault tolerance:
+	 There are three primary approaches for fault tolerance:
 	 1. Checkpoint regularly and recover from checkpoint. Checkpointing too
 	 frequently may hurt performance. Checkpointing less frequently will lose too
 	 much program progress; we will have to rollback to much older point in the 
@@ -152,8 +152,10 @@ has to deal with a number of difficult issues:
 	 2. Replicated state machines. Multiple machines simultaneously run the same
 	 program. This is costly in the common case- when nothing is crashing, and
 	 therefore should be avoided whenever possible.
+	 3. Rerun tasks. Break the program into small idempotent deterministic tasks.
+	 The fastest approach is to just rerun the failed tasks.
 	 
-   We will discuss them both in the course.
+   We will discuss these approaches in the course.
 
 ## Virtualization
 
@@ -199,7 +201,9 @@ used.
 with almost zero downtime seen by the client. Migration helps with load
 balancing, planned maintenance, and consolidation for power saving.
 3. **Isolation**: Cloud providers can run VMs from competitor businesses on the
-same physical machine. This is because VMs are isolated from each other.
+same physical machine. This is because VMs are isolated from each other. This
+isolation tends to be stronger than the isolation provided to processes by the
+OS.
 
 Cloud providers write logic to overprovision their physical machines without 
 violaiting SLAs. This logic manages VMs: where to place VMs, when to migrate,
@@ -209,7 +213,7 @@ fully open so we do not cover these aspects.
 Virtualization is supported by hypervisors also called virtual machine monitors
 (VMM). VMM sits between OS and the hardware. Operating systems fool apps into 
 thinking that they own the hardware. Apps can directly manipulate (a limited set
-of) CPU registers and have full control over (virtual) memory address space.
+of) CPU registers and have full control over (virtual address space) memory.
 Similarly, VMMs fool OS into thinking that they own the hardware. OS believes
 that it can directly manipulate all CPU registers and have full control over
 physical memory. However, of course, the VMM virtualizes the physical memory and
