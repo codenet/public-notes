@@ -242,7 +242,7 @@ C3 and C4 later read `x`:
 
 ```
 C1: |----Wx10-----|
-C2: |----Wx10-----|
+C2: |----Wx20-----|
 C3:                 |----Rx??-----|
 C4:                 |----Rx??-----|
 ```
@@ -250,4 +250,33 @@ C4:                 |----Rx??-----|
 In this history, C3 and C4 can read 10 or 20, but they must be the same. This is
 trivial behavior for single server, but single server has poor fault tolerance 
 and can not fit large states.
+
+Consider the following bad design of a distributed storage system with two
+servers S1 and S2. C1 and C2 both send their writes to S1 and S2. C3 and C4 read
+from S1.  S1 recieves x=20 before x=10 so it believes x=10. S2 receives x=10
+before x=20 so it believes x=20. At a later time, C3 reads x=10 from S1, but
+then S1 crashes.  C4 will now have to read from S2 and ends up reading x=20.
+
+```mermaid
+flowchart LR
+	S1[S1: x=10]
+	S2[S2: x=20]
+	C1 -- Wx10 --> S1 
+	C1 -- Wx10 --> S2 
+	C2 -- Wx20 --> S1
+	C2 -- Wx20 --> S2
+	S1 -- Rx10 --> C3
+	S1 -.-> C4
+	S2 -.-> C3
+	S2 -- Rx20 --> C4
+```
+
+So, overall the observed history is the following which should not have been
+observable from a single server:
+```
+C1: |----Wx10-----|
+C2: |----Wx10-----|
+C3:                 |----Rx10-----|
+C4:                 |----Rx20-----|
+```
 
