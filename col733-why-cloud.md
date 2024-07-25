@@ -15,7 +15,7 @@ your application on 200 laptops, one of them is crashing every 9 days on
 average.  Every 9 days, you're forced to do the boring tasks of recovering your
 crashed laptop.
 
-Crashed laptops and servers is not just boring; it is also very expensive. Let
+Crashed laptops and servers is not just boring, it is also very expensive. Let
 us say Amazon's servers crash for an hour during prime day. Within 1 hour,
 Amazon loses millions of dollars. Loss of data can severely break user trust:
 imagine a bank that loses last 100 transactions of an account.
@@ -82,7 +82,7 @@ There are three topics that we cover
 * Virtualization
 * Distributed storage
 
-## Why distributed computation?
+## Distributed computation
 
 You might want to spread your program onto multiple machines if you require
 lower runtime than what is possible with one machine. Programs on a single
@@ -225,7 +225,7 @@ performance overhead.
 Storage is a key abstraction for building stateful applications. We will spend
 majority of our time with storage. Distributed storage is hard to build because:
 
-* For high performance, we shard our data into multiple disks over multiple server
+* For high performance, we shard our data into multiple disks over multiple servers
 * Due to multiple servers, we get constant faults
 * For fault tolerance, we need to do replication
 * Replication can lead to inconsistent replicas
@@ -279,4 +279,6 @@ C2: |----Wx10-----|
 C3:                 |----Rx10-----|
 C4:                 |----Rx20-----|
 ```
+
+We will see how to design better distributed storage systems.
 
