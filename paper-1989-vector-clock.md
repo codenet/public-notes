@@ -8,8 +8,8 @@ Keywords:
 Poset: partially ordered sets are written as $(S, \leq)$. For $s_1, s_2 \in S$,
 it is possible that $s_1 \not\leq s_2$ and $s_2 \not\leq s_1$.
 
-Lattice: A poset is a lattice if it has finite meet and join operators $\land$
-and $\lor$ which are closed, i.e, if $x, y \in S$ then $x \land y, x \lor y \in
+Lattice: A poset is a lattice if it has finite meet $\land$ and join $\lor$
+operators which are closed, i.e, if $x, y \in S$ then $x \land y, x \lor y \in
 S$.
 
 Sublattice: Sublattice of a lattice is itself a lattice:
@@ -41,7 +41,7 @@ concurrent and which two events were causally related just by looking at their
 clocks.
 
 The paper proposes vector clocks that ensure the clock condition in both
-directions, i.e, $C(e_1) < C(e_2)$ iff $e_1 \rightarrow e_2$. A vector clocks
+directions, i.e, $C(e_1) < C(e_2)$ iff $e_1 \rightarrow e_2$. A vector clock
 has a counter, one for each process: $(c_0, c_1, ..., c_p)$. When a process
 clock ticks, i.e, it executes the next instruction, it increments its own clock 
 component. While sending a message, processes send their current vector
@@ -58,7 +58,7 @@ timestamp to each event. But there are *many* sequences of **global vector
 times** that *could have been* observed for a given trace by an external
 observer. For instance, the following shows three different global vector time
 sequences for a trace with 4 events `A`, `B`, `C`, and `D` where `A` sends a
-message which is received at `C`, `B` and `D` are internal events.
+message which is received at `C`; `B` and `D` are internal events.
 
 ```                         
        01   02  12  22             01      11  12 22           01   11  21  22    
@@ -124,17 +124,17 @@ sublattice above comes from different order of events that can be observed over
 the poset of events. 
 
 ```
-    C          22    
+    D          22    
     |         /  \   
- B  D        C    B
+ B  C        D    B
  | /         |    |   
  A          12    21 
            / \    |  
-          D   B   C
+          C   B   D
           |    \ /   
           02   11    
           \    /
-           B  D
+           B  C
             \/ 
             01
             |
@@ -211,7 +211,7 @@ messages sent after the checkpoint.
 
 When a process receives a message with $v_{p+1} = d+1$ for the first time it
 checkpoints itself and updates its clock according to the usual time propagation
-mechanism. Therefore, all the messages sent by it will have $v_{p+1} = d$. 
+mechanism. Therefore, all the messages sent by it will have $v_{p+1} = d+1$. 
 
 But since messages may be delivered out-of-order, a process that had already
 checkpointed may receive $v_{p+1} = d$ messages. These messages need to be
@@ -236,7 +236,7 @@ I love this kind of writing. Where the author is really in a
 conversation with the reader. Such as this paragraph:
 
 > However, these statements are rather vague and give rise to a few questions:
-What exactly is virtual time, and what should b e considered to be a "best
+What exactly is virtual time, and what should be considered to be a "best
 possible approximation" of global (i.e., real) time? And given an algorithm
 which was written assuming the existence of real time, is it still correct when
 virtual time is used? What is the essential structure of real time? These
@@ -246,7 +246,7 @@ Unfortunately, this style is not observed nowadays in systems paper. Another
 example is from [[paper-1986-tocs-chandy-lamport]]:
 
 > The state-detection algorithm plays the role of a group of photographers
-observing a panoramic, dynamic scene, such as a sky filled with migrating birdsa
+observing a panoramic, dynamic scene, such as a sky filled with migrating birds
 scene so vast that it cannot be captured by a single photograph. The
 photographers must take several snapshots and piece the snapshots together to
 form a picture of the overall scene. The snapshots cannot all be taken at
